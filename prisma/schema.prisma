@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+}
+
+enum Role {
+  MAHASISWA
+  LABORAN
+  KEPALA_LAB
+}
+
+enum Kondisi {
+  BAIK
+  RUSAK
+}
+
+enum StatusAlat {
+  TERSEDIA
+  DIPINJAM
+}
+
+enum StatusPinjaman {
+  PENDING
+  DIPINJAM
+  SELESAI
+  DITOLAK
+}
+
+enum NamaRuangan {
+  LAB_RPL
+  LAB_JARKOM
+  LAB_MM
+  LAB_SI
+}
+
+enum StatusBooking {
+  PENDING
+  APPROVED
+  COMPLETED
+  REJECTED
+}
+
+model User {
+  id           String        @id @default(cuid())
+  nama         String
+  email        String        @unique
+  password     String
+  role         Role          @default(MAHASISWA)
+  borrowings   Borrowing[]
+  roomBookings RoomBooking[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Asset {
+  id          String      @id @default(cuid())
+  barcode     String      @unique
+  namaAlat    String
+  kategori    String      @default("Umum")
+  kondisi     Kondisi     @default(BAIK)
+  status      StatusAlat  @default(TERSEDIA)
+  borrowings  Borrowing[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Borrowing {
+  id           String         @id @default(cuid())
+  userId       String
+  assetId      String
+  catatan      String?
+  tglPinjam    DateTime       @default(now())
+  returnedDate DateTime?
+  status       StatusPinjaman @default(PENDING)
+  user         User           @relation(fields: [userId], references: [id])
+  asset        Asset          @relation(fields: [assetId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model RoomBooking {
+  id          String        @id @default(uuid())
+  userId      String
+  roomName    NamaRuangan
+  bookingDate DateTime
+  startTime   String
+  endTime     String
+  status      StatusBooking @default(PENDING)
+  user        User          @relation(fields: [userId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
