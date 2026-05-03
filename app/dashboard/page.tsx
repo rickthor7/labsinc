@@ -133,17 +133,15 @@ export default async function DashboardPage() {
             orderBy: { bookingDate: "desc" },
         });
 
-        let allBookings: Awaited<ReturnType<typeof prisma.roomBooking.findMany>> = [];
-        try {
-            allBookings = await prisma.roomBooking.findMany({
-                include: {
-                    user: { select: { nama: true, email: true } },
-                },
-                orderBy: { bookingDate: "desc" },
-            });
-        } catch (e) {
+        const allBookings = await prisma.roomBooking.findMany({
+            include: {
+                user: { select: { nama: true, email: true } },
+            },
+            orderBy: { bookingDate: "desc" },
+        }).catch((e) => {
             console.error("Error fetching allBookings:", e);
-        }
+            return [];
+        });
 
         // Serialize dates for client component
         const borrowingsForPDF = allBorrowings.map(b => ({

@@ -158,7 +158,7 @@ export default function ExportPDFButton({ borrowings, bookings }: ExportPDFButto
             }
 
             // ── Footer ──
-            const pageCount = doc.getNumberOfPages();
+            const pageCount = doc.internal.pages.length ? doc.internal.pages.length - 1 : 0;
             for (let i = 1; i <= pageCount; i++) {
                 doc.setPage(i);
                 doc.setFontSize(8);
@@ -218,15 +218,13 @@ export default function ExportPDFButton({ borrowings, bookings }: ExportPDFButto
                                     <button
                                         key={opt.value}
                                         onClick={() => setReportType(opt.value)}
-                                        className={`flex w-full items-center gap-3 rounded-xl border p-3.5 text-left transition-all ${
-                                            reportType === opt.value
+                                        className={`flex w-full items-center gap-3 rounded-xl border p-3.5 text-left transition-all ${reportType === opt.value
                                                 ? "border-primary bg-primary/5 ring-2 ring-primary/20"
                                                 : "border-border hover:bg-surface-hover"
-                                        }`}
+                                            }`}
                                     >
-                                        <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${
-                                            reportType === opt.value ? "bg-primary/10" : "bg-surface-hover"
-                                        }`}>
+                                        <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${reportType === opt.value ? "bg-primary/10" : "bg-surface-hover"
+                                            }`}>
                                             <Icon className={`h-4 w-4 ${reportType === opt.value ? "text-primary" : "text-muted"}`} />
                                         </div>
                                         <div>
