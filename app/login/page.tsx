@@ -1,12 +1,12 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { FlaskConical, Mail, Lock, LogIn, Loader2, AlertCircle } from "lucide-react";
 import Link from "next/link";
 
-export default function LoginPage() {
+function LoginContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
@@ -168,5 +168,17 @@ export default function LoginPage() {
                 </p>
             </div>
         </div>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={
+            <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-12">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        }>
+            <LoginContent />
+        </Suspense>
     );
 }
