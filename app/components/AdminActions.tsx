@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { setujuiPinjaman, tolakPinjaman } from "@/app/actions/laboratorium";
 import { Check, X, Loader2 } from "lucide-react";
-import { showAlert } from '@/app/lib/alert'
+import { showAlert } from '@/app/lib/alert';
 
 interface AdminActionsProps {
     borrowingId: string;
