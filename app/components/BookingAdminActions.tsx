@@ -3,6 +3,7 @@
 import { useTransition } from "react";
 import { approveBooking, rejectBooking, completeBooking } from "@/app/actions/laboratorium";
 import { Check, X, CheckCircle2, Loader2 } from "lucide-react";
+import { showAlert } from '@/app/lib/alert';
 
 interface BookingAdminActionsProps {
     bookingId: string;
@@ -23,7 +24,7 @@ export default function BookingAdminActions({ bookingId, status }: BookingAdminA
                         startApprove(async () => {
                             const result = await approveBooking(bookingId);
                             if (!result.success) {
-                                alert(result.error || "Gagal menyetujui.");
+                                showAlert(result.error || "Gagal menyetujui.");
                             }
                         })
                     }
@@ -42,7 +43,7 @@ export default function BookingAdminActions({ bookingId, status }: BookingAdminA
                         startReject(async () => {
                             const result = await rejectBooking(bookingId);
                             if (!result.success) {
-                                alert(result.error || "Gagal menolak.");
+                                showAlert(result.error || "Gagal menolak.");
                             }
                         })
                     }
