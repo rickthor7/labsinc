@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { FileDown, Loader2, X, FileText, DoorOpen } from "lucide-react";
+import { showAlert } from '@/app/lib/alert';
 
 interface BorrowingData {
     id: string;
@@ -175,7 +176,7 @@ export default function ExportPDFButton({ borrowings, bookings }: ExportPDFButto
             setShowModal(false);
         } catch (err) {
             console.error("PDF export error:", err);
-            alert("Gagal mengexport PDF. Coba lagi.");
+            showAlert("Gagal mengexport PDF. Coba lagi.");
         } finally {
             setIsExporting(false);
         }
