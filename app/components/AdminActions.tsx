@@ -3,6 +3,7 @@
 import { useTransition } from "react";
 import { setujuiPinjaman, tolakPinjaman } from "@/app/actions/laboratorium";
 import { Check, X, Loader2 } from "lucide-react";
+import { showAlert } from '@/app/lib/alert'
 
 interface AdminActionsProps {
     borrowingId: string;
@@ -19,7 +20,7 @@ export default function AdminActions({ borrowingId }: AdminActionsProps) {
                     startApprove(async () => {
                         const result = await setujuiPinjaman(borrowingId);
                         if (!result.success) {
-                            alert(result.error || "Gagal menyetujui.");
+                            showAlert(result.error || "Gagal menyetujui.");
                         }
                     })
                 }
@@ -38,7 +39,7 @@ export default function AdminActions({ borrowingId }: AdminActionsProps) {
                     startReject(async () => {
                         const result = await tolakPinjaman(borrowingId);
                         if (!result.success) {
-                            alert(result.error || "Gagal menolak.");
+                            showAlert(result.error || "Gagal menolak.");
                         }
                     })
                 }
