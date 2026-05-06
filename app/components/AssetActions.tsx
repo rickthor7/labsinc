@@ -3,6 +3,7 @@
 import { useTransition } from "react";
 import { updateAssetStatus, updateAssetKondisi, deleteAsset } from "@/app/actions/manageAssets";
 import { ToggleLeft, ToggleRight, ShieldCheck, ShieldAlert, Trash2, Loader2 } from "lucide-react";
+import { showAlert } from '@/app/lib/alert';
 
 interface AssetActionsProps {
     assetId: string;
@@ -19,7 +20,7 @@ export default function AssetActions({ assetId, currentStatus, currentKondisi }:
         const newStatus = currentStatus === "TERSEDIA" ? "DIPINJAM" : "TERSEDIA";
         startStatusTransition(async () => {
             const result = await updateAssetStatus(assetId, newStatus);
-            if (!result.success) alert(result.error);
+            if (!result.success) showAlert(result.error);
         });
     };
 
@@ -27,7 +28,7 @@ export default function AssetActions({ assetId, currentStatus, currentKondisi }:
         const newKondisi = currentKondisi === "BAIK" ? "RUSAK" : "BAIK";
         startKondisiTransition(async () => {
             const result = await updateAssetKondisi(assetId, newKondisi);
-            if (!result.success) alert(result.error);
+            if (!result.success) showAlert(result.error);
         });
     };
 
@@ -35,7 +36,7 @@ export default function AssetActions({ assetId, currentStatus, currentKondisi }:
         if (!confirm("Yakin ingin menghapus aset ini? Data peminjaman terkait juga akan dihapus.")) return;
         startDeleteTransition(async () => {
             const result = await deleteAsset(assetId);
-            if (!result.success) alert(result.error);
+            if (!result.success) showAlert(result.error);
         });
     };
 
