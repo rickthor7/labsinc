@@ -3,6 +3,7 @@
 import { useTransition } from "react";
 import { returnEquipment } from "@/app/actions/laboratorium";
 import { RotateCcw, Loader2 } from "lucide-react";
+import { showAlert } from '@/app/lib/alert';
 
 interface ReturnButtonProps {
     borrowingId: string;
@@ -17,7 +18,7 @@ export default function ReturnButton({ borrowingId }: ReturnButtonProps) {
                 startTransition(async () => {
                     const result = await returnEquipment(borrowingId);
                     if (!result.success) {
-                        alert(result.error || "Gagal mengembalikan alat.");
+                        showAlert(result.error || "Gagal mengembalikan alat.");
                     }
                 })
             }
