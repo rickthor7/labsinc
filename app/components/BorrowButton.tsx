@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { ajukanPinjaman } from "@/app/actions/laboratorium";
 import { Send, Loader2, X, MessageSquare } from "lucide-react";
+import { showAlert } from '@/app/lib/alert';
 
 interface BorrowButtonProps {
     assetId: string;
@@ -42,10 +43,10 @@ export default function BorrowButton({ assetId, disabled }: BorrowButtonProps) {
                         router.push("/login");
                     }
                 } else {
-                    alert(result.error || "Gagal mengajukan pinjaman.");
+                    showAlert(result.error || "Gagal mengajukan pinjaman.");
                 }
             } else {
-                alert("✅ Pinjaman berhasil diajukan! Status: PENDING.\nSilakan cek Dashboard untuk melihat status.");
+                showAlert("✅ Pinjaman berhasil diajukan! Status: PENDING.\nSilakan cek Dashboard untuk melihat status.");
                 setCatatan("");
                 setShowModal(false);
             }
