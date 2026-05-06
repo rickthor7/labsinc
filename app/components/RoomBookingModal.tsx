@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { bookRoom } from "@/app/actions/laboratorium";
 import { X, CalendarDays, Clock, Loader2, Send } from "lucide-react";
+import { showAlert } from '@/app/lib/alert';
 
 interface RoomBookingModalProps {
     roomName: string;
@@ -50,7 +51,7 @@ export default function RoomBookingModal({ roomName, roomLabel, isOpen, onClose 
                         setError(result.error || "Gagal booking ruangan.");
                     }
                 } else {
-                    alert("✅ Booking berhasil diajukan! Status: PENDING.\nSilakan cek Dashboard untuk melihat status.");
+                    showAlert("✅ Booking berhasil diajukan! Status: PENDING.\nSilakan cek Dashboard untuk melihat status.");
                     setDate("");
                     setStartTime("");
                     setEndTime("");
