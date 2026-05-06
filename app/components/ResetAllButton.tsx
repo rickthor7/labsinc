@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { resetAllStatus } from "@/app/actions/manageAssets";
 import { RefreshCcw, Loader2 } from "lucide-react";
+import { showAlert } from '@/app/lib/alert';
 
 export default function ResetAllButton() {
     const router = useRouter();
@@ -15,9 +16,9 @@ export default function ResetAllButton() {
         startTransition(async () => {
             const result = await resetAllStatus();
             if (!result.success) {
-                alert(result.error);
+                showAlert(result.error);
             } else {
-                alert(`✅ ${result.count} aset berhasil direset ke TERSEDIA.`);
+                showAlert(`✅ ${result.count} aset berhasil direset ke TERSEDIA.`);
                 router.refresh();
             }
         });
